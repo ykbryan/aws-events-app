@@ -1,0 +1,272 @@
+type User {
+  id: ID!
+  name: String
+  email: String!
+  phone_number: String
+  username: String
+  events(filter: ModelEventFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelEventConnection
+  chats(filter: ModelChatFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelChatConnection
+  followers(filter: ModelFollowerFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelFollowerConnection
+}
+
+type Event {
+  id: ID!
+  title: String!
+  description: String
+  status: String
+  user: User
+  chats(filter: ModelChatFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelChatConnection
+  followers(filter: ModelFollowerFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelFollowerConnection
+  startAt: Int
+}
+
+type Chat {
+  id: ID!
+  content: String!
+  user: User
+  event: Event
+  createdAt: String
+}
+
+type Follower {
+  id: ID!
+  user: User
+  event: Event
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelUserConnection {
+  items: [User]
+  nextToken: String
+}
+
+input ModelStringFilterInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+}
+
+input ModelIDFilterInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+}
+
+input ModelIntFilterInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  contains: Int
+  notContains: Int
+  between: [Int]
+}
+
+input ModelFloatFilterInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  contains: Float
+  notContains: Float
+  between: [Float]
+}
+
+input ModelBooleanFilterInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelUserFilterInput {
+  id: ModelIDFilterInput
+  name: ModelStringFilterInput
+  email: ModelStringFilterInput
+  phone_number: ModelStringFilterInput
+  username: ModelStringFilterInput
+  and: [ModelUserFilterInput]
+  or: [ModelUserFilterInput]
+  not: ModelUserFilterInput
+}
+
+type Query {
+  getUser(id: ID!): User
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection
+  getEvent(id: ID!): Event
+  listEvents(filter: ModelEventFilterInput, limit: Int, nextToken: String): ModelEventConnection
+  getChat(id: ID!): Chat
+  listChats(filter: ModelChatFilterInput, limit: Int, nextToken: String): ModelChatConnection
+  getFollower(id: ID!): Follower
+  listFollowers(filter: ModelFollowerFilterInput, limit: Int, nextToken: String): ModelFollowerConnection
+}
+
+input CreateUserInput {
+  id: ID
+  name: String
+  email: String!
+  phone_number: String
+  username: String
+}
+
+input UpdateUserInput {
+  id: ID!
+  name: String
+  email: String
+  phone_number: String
+  username: String
+}
+
+input DeleteUserInput {
+  id: ID
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User
+  updateUser(input: UpdateUserInput!): User
+  deleteUser(input: DeleteUserInput!): User
+  createEvent(input: CreateEventInput!): Event
+  updateEvent(input: UpdateEventInput!): Event
+  deleteEvent(input: DeleteEventInput!): Event
+  createChat(input: CreateChatInput!): Chat
+  updateChat(input: UpdateChatInput!): Chat
+  deleteChat(input: DeleteChatInput!): Chat
+  createFollower(input: CreateFollowerInput!): Follower
+  updateFollower(input: UpdateFollowerInput!): Follower
+  deleteFollower(input: DeleteFollowerInput!): Follower
+}
+
+type Subscription {
+  onCreateUser: User @aws_subscribe(mutations: ["createUser"])
+  onUpdateUser: User @aws_subscribe(mutations: ["updateUser"])
+  onDeleteUser: User @aws_subscribe(mutations: ["deleteUser"])
+  onCreateEvent: Event @aws_subscribe(mutations: ["createEvent"])
+  onUpdateEvent: Event @aws_subscribe(mutations: ["updateEvent"])
+  onDeleteEvent: Event @aws_subscribe(mutations: ["deleteEvent"])
+  onCreateChat: Chat @aws_subscribe(mutations: ["createChat"])
+  onUpdateChat: Chat @aws_subscribe(mutations: ["updateChat"])
+  onDeleteChat: Chat @aws_subscribe(mutations: ["deleteChat"])
+  onCreateFollower: Follower @aws_subscribe(mutations: ["createFollower"])
+  onUpdateFollower: Follower @aws_subscribe(mutations: ["updateFollower"])
+  onDeleteFollower: Follower @aws_subscribe(mutations: ["deleteFollower"])
+}
+
+type ModelEventConnection {
+  items: [Event]
+  nextToken: String
+}
+
+input ModelEventFilterInput {
+  id: ModelIDFilterInput
+  title: ModelStringFilterInput
+  description: ModelStringFilterInput
+  status: ModelStringFilterInput
+  startAt: ModelIntFilterInput
+  and: [ModelEventFilterInput]
+  or: [ModelEventFilterInput]
+  not: ModelEventFilterInput
+}
+
+input CreateEventInput {
+  id: ID
+  title: String!
+  description: String
+  status: String
+  startAt: Int
+  eventUserId: ID
+}
+
+input UpdateEventInput {
+  id: ID!
+  title: String
+  description: String
+  status: String
+  startAt: Int
+  eventUserId: ID
+}
+
+input DeleteEventInput {
+  id: ID
+}
+
+type ModelChatConnection {
+  items: [Chat]
+  nextToken: String
+}
+
+input ModelChatFilterInput {
+  id: ModelIDFilterInput
+  content: ModelStringFilterInput
+  createdAt: ModelStringFilterInput
+  and: [ModelChatFilterInput]
+  or: [ModelChatFilterInput]
+  not: ModelChatFilterInput
+}
+
+input CreateChatInput {
+  id: ID
+  content: String!
+  createdAt: String
+  chatUserId: ID
+  chatEventId: ID
+}
+
+input UpdateChatInput {
+  id: ID!
+  content: String
+  createdAt: String
+  chatUserId: ID
+  chatEventId: ID
+}
+
+input DeleteChatInput {
+  id: ID
+}
+
+type ModelFollowerConnection {
+  items: [Follower]
+  nextToken: String
+}
+
+input ModelFollowerFilterInput {
+  id: ModelIDFilterInput
+  and: [ModelFollowerFilterInput]
+  or: [ModelFollowerFilterInput]
+  not: ModelFollowerFilterInput
+}
+
+input CreateFollowerInput {
+  id: ID
+  followerUserId: ID
+  followerEventId: ID
+}
+
+input UpdateFollowerInput {
+  id: ID!
+  followerUserId: ID
+  followerEventId: ID
+}
+
+input DeleteFollowerInput {
+  id: ID
+}

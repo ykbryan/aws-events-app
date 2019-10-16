@@ -1,0 +1,14 @@
+{
+    "CreateAPIKey": 0,
+    "AppSyncApiName": "eventapp",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "autheventapp8b4796b2",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "S3DeploymentBucket": "event-app-dev-20191013133502-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/7d6eb8c6079a56200696ba3b26c8808d67103b4a"
+}

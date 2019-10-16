@@ -1,0 +1,24 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "event-app-dev-20191013133502-authRole",
+            "UnauthRoleArn": "arn:aws:iam::566416766292:role/event-app-dev-20191013133502-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::566416766292:role/event-app-dev-20191013133502-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "event-app-dev-20191013133502-deployment",
+            "UnauthRoleName": "event-app-dev-20191013133502-unauthRole",
+            "StackName": "event-app-dev-20191013133502",
+            "StackId": "arn:aws:cloudformation:us-east-1:566416766292:stack/event-app-dev-20191013133502/358d3e00-ed7b-11e9-8349-0a5ca37ccc16"
+        },
+        "categories": {
+            "function": {
+                "eventapp8b4796b2PostConfirmation": {
+                    "GROUP": "admin"
+                }
+            },
+            "auth": {
+                "eventapp8b4796b2": {}
+            }
+        }
+    }
+}
