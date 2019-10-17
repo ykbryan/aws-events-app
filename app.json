@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Eventapp",
-    "slug": "event-app",
+    "name": "AWS Event App",
+    "slug": "aws-event-app",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": ["ios", "android", "web"],
