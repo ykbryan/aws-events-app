@@ -13,6 +13,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
         id
         title
         description
+        status
         startAt
       }
       nextToken
@@ -46,6 +47,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
         id
         title
         description
+        status
         startAt
       }
       nextToken
@@ -79,6 +81,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
         id
         title
         description
+        status
         startAt
       }
       nextToken
@@ -105,6 +108,7 @@ export const createEvent = `mutation CreateEvent($input: CreateEventInput!) {
     id
     title
     description
+    status
     user {
       id
       name
@@ -144,6 +148,7 @@ export const updateEvent = `mutation UpdateEvent($input: UpdateEventInput!) {
     id
     title
     description
+    status
     user {
       id
       name
@@ -183,6 +188,7 @@ export const deleteEvent = `mutation DeleteEvent($input: DeleteEventInput!) {
     id
     title
     description
+    status
     user {
       id
       name
@@ -241,6 +247,7 @@ export const createChat = `mutation CreateChat($input: CreateChatInput!) {
       id
       title
       description
+      status
       user {
         id
         name
@@ -284,6 +291,7 @@ export const updateChat = `mutation UpdateChat($input: UpdateChatInput!) {
       id
       title
       description
+      status
       user {
         id
         name
@@ -327,6 +335,7 @@ export const deleteChat = `mutation DeleteChat($input: DeleteChatInput!) {
       id
       title
       description
+      status
       user {
         id
         name
@@ -369,6 +378,7 @@ export const createFollower = `mutation CreateFollower($input: CreateFollowerInp
       id
       title
       description
+      status
       user {
         id
         name
@@ -410,6 +420,7 @@ export const updateFollower = `mutation UpdateFollower($input: UpdateFollowerInp
       id
       title
       description
+      status
       user {
         id
         name
@@ -451,6 +462,7 @@ export const deleteFollower = `mutation DeleteFollower($input: DeleteFollowerInp
       id
       title
       description
+      status
       user {
         id
         name

@@ -13,6 +13,7 @@ type Event {
   id: ID!
   title: String!
   description: String
+  status: String
   user: User
   chats(filter: ModelChatFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelChatConnection
   followers(filter: ModelFollowerFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelFollowerConnection
@@ -179,6 +180,7 @@ input ModelEventFilterInput {
   id: ModelIDFilterInput
   title: ModelStringFilterInput
   description: ModelStringFilterInput
+  status: ModelStringFilterInput
   startAt: ModelIntFilterInput
   and: [ModelEventFilterInput]
   or: [ModelEventFilterInput]
@@ -189,6 +191,7 @@ input CreateEventInput {
   id: ID
   title: String!
   description: String
+  status: String
   startAt: Int
   eventUserId: ID
 }
@@ -197,6 +200,7 @@ input UpdateEventInput {
   id: ID!
   title: String
   description: String
+  status: String
   startAt: Int
   eventUserId: ID
 }

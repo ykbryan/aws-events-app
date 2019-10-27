@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 58153,
   "expoServerNgrokUrl": "https://yj-4zk.ykbryan.event-app.exp.direct",
   "packagerNgrokUrl": "https://packager.yj-4zk.ykbryan.event-app.exp.direct",
-  "ngrokPid": 17107
+  "ngrokPid": 58169
 }

@@ -1,21 +1,21 @@
 {
-    "dev": {
+    "test": {
         "awscloudformation": {
-            "AuthRoleName": "eventapp-dev-20191027062317-authRole",
-            "UnauthRoleArn": "arn:aws:iam::566416766292:role/eventapp-dev-20191027062317-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::566416766292:role/eventapp-dev-20191027062317-authRole",
+            "AuthRoleName": "eventapp-test-20191027065309-authRole",
+            "UnauthRoleArn": "arn:aws:iam::566416766292:role/eventapp-test-20191027065309-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::566416766292:role/eventapp-test-20191027065309-authRole",
             "Region": "us-east-1",
-            "DeploymentBucketName": "eventapp-dev-20191027062317-deployment",
-            "UnauthRoleName": "eventapp-dev-20191027062317-unauthRole",
-            "StackName": "eventapp-dev-20191027062317",
-            "StackId": "arn:aws:cloudformation:us-east-1:566416766292:stack/eventapp-dev-20191027062317/f15bdbe0-f8bc-11e9-b68a-0e58854680da"
+            "DeploymentBucketName": "eventapp-test-20191027065309-deployment",
+            "UnauthRoleName": "eventapp-test-20191027065309-unauthRole",
+            "StackName": "eventapp-test-20191027065309",
+            "StackId": "arn:aws:cloudformation:us-east-1:566416766292:stack/eventapp-test-20191027065309/1cf11910-f8c1-11e9-b986-0a56ba5f6f9e"
         },
         "categories": {
             "auth": {
-                "eventapp0f50048a": {}
+                "eventappb34e47d1": {}
             },
             "function": {
-                "eventapp0f50048aPostConfirmation": {
+                "eventappb34e47d1PostConfirmation": {
                     "GROUP": "admin"
                 }
             }

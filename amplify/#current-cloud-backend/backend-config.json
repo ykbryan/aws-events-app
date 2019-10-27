@@ -1,12 +1,12 @@
 {
 	"auth": {
-		"eventapp0f50048a": {
+		"eventappb34e47d1": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": [
 				{
 					"category": "function",
-					"resourceName": "eventapp0f50048aPostConfirmation",
+					"resourceName": "eventappb34e47d1PostConfirmation",
 					"triggerProvider": "Cognito",
 					"attributes": [
 						"Arn",
@@ -14,6 +14,13 @@
 					]
 				}
 			]
+		}
+	},
+	"function": {
+		"eventappb34e47d1PostConfirmation": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true
 		}
 	},
 	"api": {
@@ -26,18 +33,11 @@
 					"defaultAuthentication": {
 						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
 						"userPoolConfig": {
-							"userPoolId": "autheventapp0f50048a"
+							"userPoolId": "autheventappb34e47d1"
 						}
 					}
 				}
 			}
-		}
-	},
-	"function": {
-		"eventapp0f50048aPostConfirmation": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true
 		}
 	},
 	"analytics": {

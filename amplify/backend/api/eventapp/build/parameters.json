@@ -5,10 +5,10 @@
     "DynamoDBEnableServerSideEncryption": "false",
     "AuthCognitoUserPoolId": {
         "Fn::GetAtt": [
-            "autheventapp0f50048a",
+            "autheventappb34e47d1",
             "Outputs.UserPoolId"
         ]
     },
-    "S3DeploymentBucket": "eventapp-dev-20191027062317-deployment",
-    "S3DeploymentRootKey": "amplify-appsync-files/20be14bfcd90e6a724202e3cade6e11bffca4e66"
+    "S3DeploymentBucket": "eventapp-test-20191027065309-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/4f89e957df5bf65269e6c74d282f94af8425bc98"
 }

@@ -68,15 +68,15 @@
 				}
 			}
 		},
-		"autheventapp0f50048a": {
+		"autheventappb34e47d1": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/eventapp-dev-20191027062317-deployment/amplify-cfn-templates/auth/eventapp0f50048a-cloudformation-template.yml",
+				"TemplateURL": "https://s3.amazonaws.com/eventapp-test-20191027065309-deployment/amplify-cfn-templates/auth/eventappb34e47d1-cloudformation-template.yml",
 				"Parameters": {
-					"identityPoolName": "eventapp0f50048a_identitypool_0f50048a",
+					"identityPoolName": "eventappb34e47d1_identitypool_b34e47d1",
 					"allowUnauthenticatedIdentities": true,
-					"resourceNameTruncated": "eventa0f50048a",
-					"userPoolName": "eventapp0f50048a_userpool_0f50048a",
+					"resourceNameTruncated": "eventab34e47d1",
+					"userPoolName": "eventappb34e47d1_userpool_b34e47d1",
 					"autoVerifiedAttributes": "email",
 					"mfaConfiguration": "OFF",
 					"mfaTypes": "SMS Text Message",
@@ -92,9 +92,9 @@
 					"userpoolClientRefreshTokenValidity": 30,
 					"userpoolClientWriteAttributes": "family_name,given_name,phone_number,email",
 					"userpoolClientReadAttributes": "email,family_name,given_name,phone_number",
-					"userpoolClientLambdaRole": "eventa0f50048a_userpoolclient_lambda_role",
+					"userpoolClientLambdaRole": "eventab34e47d1_userpoolclient_lambda_role",
 					"userpoolClientSetAttributes": true,
-					"resourceName": "eventapp0f50048a",
+					"resourceName": "eventappb34e47d1",
 					"authSelections": "identityPoolAndUserPool",
 					"authRoleArn": {
 						"Fn::GetAtt": [
@@ -117,26 +117,38 @@
 						"Ref": "AWS::StackId"
 					},
 					"permissions": "{\"policyName\":\"AddToGroupCognito\",\"trigger\":\"PostConfirmation\",\"effect\":\"Allow\",\"actions\":[\"cognito-idp:AdminAddUserToGroup\",\"cognito-idp:GetGroup\",\"cognito-idp:CreateGroup\"],\"resource\":{\"paramType\":\"!GetAtt\",\"keys\":[\"UserPool\",\"Arn\"]}}",
-					"functioneventapp0f50048aPostConfirmationArn": {
+					"functioneventappb34e47d1PostConfirmationArn": {
 						"Fn::GetAtt": [
-							"functioneventapp0f50048aPostConfirmation",
+							"functioneventappb34e47d1PostConfirmation",
 							"Outputs.Arn"
 						]
 					},
-					"functioneventapp0f50048aPostConfirmationName": {
+					"functioneventappb34e47d1PostConfirmationName": {
 						"Fn::GetAtt": [
-							"functioneventapp0f50048aPostConfirmation",
+							"functioneventappb34e47d1PostConfirmation",
 							"Outputs.Name"
 						]
 					},
-					"env": "dev"
+					"env": "test"
+				}
+			}
+		},
+		"functioneventappb34e47d1PostConfirmation": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/eventapp-test-20191027065309-deployment/amplify-cfn-templates/function/eventappb34e47d1PostConfirmation-cloudformation-template.json",
+				"Parameters": {
+					"modules": "add-to-group",
+					"resourceName": "eventappb34e47d1PostConfirmation",
+					"GROUP": "admin",
+					"env": "test"
 				}
 			}
 		},
 		"apieventapp": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/eventapp-dev-20191027062317-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+				"TemplateURL": "https://s3.amazonaws.com/eventapp-test-20191027065309-deployment/amplify-cfn-templates/api/cloudformation-template.json",
 				"Parameters": {
 					"CreateAPIKey": 0,
 					"AppSyncApiName": "eventapp",
@@ -144,38 +156,27 @@
 					"DynamoDBEnableServerSideEncryption": "false",
 					"AuthCognitoUserPoolId": {
 						"Fn::GetAtt": [
-							"autheventapp0f50048a",
+							"autheventappb34e47d1",
 							"Outputs.UserPoolId"
 						]
 					},
-					"S3DeploymentBucket": "eventapp-dev-20191027062317-deployment",
-					"S3DeploymentRootKey": "amplify-appsync-files/20be14bfcd90e6a724202e3cade6e11bffca4e66",
-					"env": "dev"
-				}
-			}
-		},
-		"functioneventapp0f50048aPostConfirmation": {
-			"Type": "AWS::CloudFormation::Stack",
-			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/eventapp-dev-20191027062317-deployment/amplify-cfn-templates/function/eventapp0f50048aPostConfirmation-cloudformation-template.json",
-				"Parameters": {
-					"modules": "add-to-group",
-					"GROUP": "admin",
-					"env": "dev"
+					"S3DeploymentBucket": "eventapp-test-20191027065309-deployment",
+					"S3DeploymentRootKey": "amplify-appsync-files/4f89e957df5bf65269e6c74d282f94af8425bc98",
+					"env": "test"
 				}
 			}
 		},
 		"analyticseventapp": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/eventapp-dev-20191027062317-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
+				"TemplateURL": "https://s3.amazonaws.com/eventapp-test-20191027065309-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
 				"Parameters": {
 					"appName": "eventapp",
-					"roleName": "pinpointLambdaRolefc115b61",
-					"cloudWatchPolicyName": "cloudWatchPolicyfc115b61",
-					"pinpointPolicyName": "pinpointPolicyfc115b61",
-					"authPolicyName": "pinpoint_amplify_fc115b61",
-					"unauthPolicyName": "pinpoint_amplify_fc115b61",
+					"roleName": "pinpointLambdaRoleabe56b09",
+					"cloudWatchPolicyName": "cloudWatchPolicyabe56b09",
+					"pinpointPolicyName": "pinpointPolicyabe56b09",
+					"authPolicyName": "pinpoint_amplify_abe56b09",
+					"unauthPolicyName": "pinpoint_amplify_abe56b09",
 					"authRoleName": {
 						"Ref": "AuthRoleName"
 					},
@@ -188,7 +189,7 @@
 							"Arn"
 						]
 					},
-					"env": "dev"
+					"env": "test"
 				}
 			}
 		},
@@ -196,7 +197,7 @@
 			"DependsOn": [
 				"AuthRole",
 				"UnauthRole",
-				"autheventapp0f50048a"
+				"autheventappb34e47d1"
 			],
 			"Type": "AWS::Lambda::Function",
 			"Properties": {
@@ -279,7 +280,7 @@
 				},
 				"idpId": {
 					"Fn::GetAtt": [
-						"autheventapp0f50048a",
+						"autheventappb34e47d1",
 						"Outputs.IdentityPoolId"
 					]
 				},

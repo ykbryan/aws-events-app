@@ -13,6 +13,7 @@ export const onCreateUser = `subscription OnCreateUser {
         id
         title
         description
+        status
         startAt
       }
       nextToken
@@ -46,6 +47,7 @@ export const onUpdateUser = `subscription OnUpdateUser {
         id
         title
         description
+        status
         startAt
       }
       nextToken
@@ -79,6 +81,7 @@ export const onDeleteUser = `subscription OnDeleteUser {
         id
         title
         description
+        status
         startAt
       }
       nextToken
@@ -105,6 +108,7 @@ export const onCreateEvent = `subscription OnCreateEvent {
     id
     title
     description
+    status
     user {
       id
       name
@@ -144,6 +148,7 @@ export const onUpdateEvent = `subscription OnUpdateEvent {
     id
     title
     description
+    status
     user {
       id
       name
@@ -183,6 +188,7 @@ export const onDeleteEvent = `subscription OnDeleteEvent {
     id
     title
     description
+    status
     user {
       id
       name
@@ -241,6 +247,7 @@ export const onCreateChat = `subscription OnCreateChat {
       id
       title
       description
+      status
       user {
         id
         name
@@ -284,6 +291,7 @@ export const onUpdateChat = `subscription OnUpdateChat {
       id
       title
       description
+      status
       user {
         id
         name
@@ -327,6 +335,7 @@ export const onDeleteChat = `subscription OnDeleteChat {
       id
       title
       description
+      status
       user {
         id
         name
@@ -369,6 +378,7 @@ export const onCreateFollower = `subscription OnCreateFollower {
       id
       title
       description
+      status
       user {
         id
         name
@@ -410,6 +420,7 @@ export const onUpdateFollower = `subscription OnUpdateFollower {
       id
       title
       description
+      status
       user {
         id
         name
@@ -451,6 +462,7 @@ export const onDeleteFollower = `subscription OnDeleteFollower {
       id
       title
       description
+      status
       user {
         id
         name

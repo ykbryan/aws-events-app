@@ -1,0 +1,14 @@
+{
+    "trigger": true,
+    "modules": [
+        "add-to-group"
+    ],
+    "parentResource": "eventappb34e47d1",
+    "functionName": "eventappb34e47d1PostConfirmation",
+    "parentStack": "auth",
+    "triggerEnvs": "[]",
+    "triggerTemplate": "PostConfirmation.json.ejs",
+    "roleName": "eventappb34e47d1PostConfirmation",
+    "skipEdit": true,
+    "resourceName": "eventappb34e47d1PostConfirmation"
+}
