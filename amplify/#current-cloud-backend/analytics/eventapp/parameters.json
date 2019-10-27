@@ -1,10 +1,10 @@
 {
     "appName": "eventapp",
-    "roleName": "pinpointLambdaRole78dffda6",
-    "cloudWatchPolicyName": "cloudWatchPolicy78dffda6",
-    "pinpointPolicyName": "pinpointPolicy78dffda6",
-    "authPolicyName": "pinpoint_amplify_78dffda6",
-    "unauthPolicyName": "pinpoint_amplify_78dffda6",
+    "roleName": "pinpointLambdaRolefc115b61",
+    "cloudWatchPolicyName": "cloudWatchPolicyfc115b61",
+    "pinpointPolicyName": "pinpointPolicyfc115b61",
+    "authPolicyName": "pinpoint_amplify_fc115b61",
+    "unauthPolicyName": "pinpoint_amplify_fc115b61",
     "authRoleName": {
         "Ref": "AuthRoleName"
     },

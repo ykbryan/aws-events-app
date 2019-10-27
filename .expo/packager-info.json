@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 36726,
-  "expoServerNgrokUrl": "https://bg-tgj.anonymous.event-app.exp.direct",
-  "packagerNgrokUrl": "https://packager.bg-tgj.anonymous.event-app.exp.direct",
-  "ngrokPid": 36745
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": "https://yj-4zk.ykbryan.event-app.exp.direct",
+  "packagerNgrokUrl": "https://packager.yj-4zk.ykbryan.event-app.exp.direct",
+  "ngrokPid": 17107
 }

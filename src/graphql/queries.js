@@ -13,7 +13,6 @@ export const getUser = `query GetUser($id: ID!) {
         id
         title
         description
-        status
         startAt
       }
       nextToken
@@ -66,7 +65,6 @@ export const getEvent = `query GetEvent($id: ID!) {
     id
     title
     description
-    status
     user {
       id
       name
@@ -111,7 +109,6 @@ export const listEvents = `query ListEvents(
       id
       title
       description
-      status
       user {
         id
         name
@@ -155,7 +152,6 @@ export const getChat = `query GetChat($id: ID!) {
       id
       title
       description
-      status
       user {
         id
         name
@@ -195,7 +191,6 @@ export const listChats = `query ListChats(
         id
         title
         description
-        status
         startAt
       }
       createdAt
@@ -227,7 +222,6 @@ export const getFollower = `query GetFollower($id: ID!) {
       id
       title
       description
-      status
       user {
         id
         name
@@ -265,7 +259,6 @@ export const listFollowers = `query ListFollowers(
         id
         title
         description
-        status
         startAt
       }
     }
