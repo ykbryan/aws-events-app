@@ -71,7 +71,7 @@ export default function ChatScreen(props) {
   }, [setMessages]);
 
   useEffect(() => {
-    let subscription = API.graphql(graphqlOperation(onCreateChat)).subscribe({
+    const subscription = API.graphql(graphqlOperation(onCreateChat)).subscribe({
       next: response => {
         let newMessageFromResponse = response.value.data.onCreateChat;
         if (
@@ -82,6 +82,9 @@ export default function ChatScreen(props) {
             GiftedChat.append(messages, formatMessage(newMessageFromResponse))
           );
         }
+      },
+      error: error => {
+        // console.log(error);
       }
     });
 
