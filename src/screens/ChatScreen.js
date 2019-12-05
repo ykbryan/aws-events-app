@@ -84,7 +84,7 @@ export default function ChatScreen(props) {
         }
       },
       error: error => {
-        // console.log(error);
+        // console.logq(error);
       }
     });
 
