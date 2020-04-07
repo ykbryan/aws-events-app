@@ -4,7 +4,7 @@
   "limit": $limit
 } )
 #if( $context.args.nextToken )
-  #set( $ListRequest.nextToken = "$context.args.nextToken" )
+  #set( $ListRequest.nextToken = $context.args.nextToken )
 #end
 #if( $context.args.filter )
   #set( $ListRequest.filter = $util.parseJson("$util.transform.toDynamoDBFilterExpression($ctx.args.filter)") )

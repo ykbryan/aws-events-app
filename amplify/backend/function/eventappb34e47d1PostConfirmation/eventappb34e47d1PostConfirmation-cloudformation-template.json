@@ -102,7 +102,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "eventapp-test-20191027065309-deployment",
-					"S3Key": "amplify-builds/eventappb34e47d1PostConfirmation-5172414a7447364a6f63-build.zip"
+					"S3Key": "amplify-builds/eventappb34e47d1PostConfirmation-4a73452b706665345964-build.zip"
 				}
 			}
 		},

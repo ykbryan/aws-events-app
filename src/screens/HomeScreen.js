@@ -1,85 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Content, Button, Icon } from 'native-base';
+import React from 'react';
+import {
+  Container,
+  Header,
+  Body,
+  Button,
+  Title,
+  Text,
+  Content,
+  Card,
+  CardItem
+} from 'native-base';
 
-import { getCognitoUser, updateDatabaseUser } from '../utils/users';
-import NavigationService from '../utils/NavigationService';
-
-import { API, graphqlOperation } from 'aws-amplify';
-import Analytics from '@aws-amplify/analytics';
-import { listEvents } from '../graphql/queries';
-
-import EventBox from '../components/EventBox';
-
-export default function HomeScreen() {
-  let user = getCognitoUser();
-  const attributes = user.attributes;
-  updateDatabaseUser(user.username, attributes);
-  const [events, setEvents] = useState([]);
-  getAllEvents(events, setEvents);
-
-  renderEvents = allEvents => {
-    if (allEvents.length > 0)
-      Analytics.record({
-        name: 'loaded',
-        attributes: {
-          screen: 'Home'
-        }
-      });
-    return allEvents.map(event => (
-      <EventBox
-        currentUser={user}
-        isClickable={true}
-        key={event.id}
-        event={event}
-      />
-    ));
-  };
-
-  getNewEvent = newEvent => {
-    setEvents([newEvent, ...events]);
-  };
-
+export default function({ navigation }) {
   return (
     <Container>
-      <Content padder>{renderEvents(events)}</Content>
+      <Header>
+        <Body>
+          <Title>Home Header</Title>
+        </Body>
+      </Header>
+      <Content padder style={{ alignContent: 'center' }}>
+        <Card>
+          <CardItem>
+            <Body>
+              <Text>//Your text here</Text>
+              <Text>//Your text here</Text>
+              <Text>//Your text here</Text>
+              <Text>//Your text here</Text>
+              <Text>//Your text here</Text>
+              <Button
+                onPress={() => {
+                  navigation.navigate('Modal');
+                }}
+                bordered
+              >
+                <Text>Open Modal</Text>
+              </Button>
+            </Body>
+          </CardItem>
+        </Card>
+      </Content>
     </Container>
   );
-}
-
-HomeScreen.navigationOptions = {
-  headerTitle: 'Home',
-  headerRight: (
-    <Button
-      transparent
-      onPress={() =>
-        NavigationService.navigate('Create', {
-          onGoBack: data => getNewEvent(data)
-        })
-      }
-    >
-      <Icon name='add' style={{ padding: 10 }}></Icon>
-    </Button>
-  )
-};
-
-function getAllEvents(events, setEvents) {
-  let hasUpdate = true;
-  useEffect(() => {
-    fetchEvents();
-  }, hasUpdate);
-
-  const input = {
-    filter: {
-      startAt: {
-        ge: parseInt(new Date().getTime() / 1000)
-      }
-    }
-  };
-
-  fetchEvents = async () => {
-    const allEvents = await API.graphql(graphqlOperation(listEvents, input));
-    setEvents(allEvents.data.listEvents.items);
-  };
-
-  return events;
 }

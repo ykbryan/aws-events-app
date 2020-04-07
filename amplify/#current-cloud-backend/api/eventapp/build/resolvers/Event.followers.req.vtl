@@ -30,7 +30,7 @@ null
   #end,
   "limit": $limit,
   "nextToken":   #if( $context.args.nextToken )
-"$context.args.nextToken"
+$util.toJson($context.args.nextToken)
   #else
 null
   #end,

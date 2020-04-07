@@ -8,7 +8,18 @@
 			"DeploymentBucketName": "eventapp-test-20191027065309-deployment",
 			"UnauthRoleName": "eventapp-test-20191027065309-unauthRole",
 			"StackName": "eventapp-test-20191027065309",
-			"StackId": "arn:aws:cloudformation:us-east-1:566416766292:stack/eventapp-test-20191027065309/1cf11910-f8c1-11e9-b986-0a56ba5f6f9e"
+			"StackId": "arn:aws:cloudformation:us-east-1:566416766292:stack/eventapp-test-20191027065309/1cf11910-f8c1-11e9-b986-0a56ba5f6f9e",
+			"AmplifyAppId": "d1x9uzf3k9hnzc"
+		},
+		"categories": {
+			"auth": {
+				"eventappb34e47d1": {}
+			},
+			"function": {
+				"eventappb34e47d1PostConfirmation": {
+					"GROUP": "admin"
+				}
+			}
 		}
 	},
 	"auth": {
@@ -26,11 +37,6 @@
 					]
 				}
 			],
-			"lastPushTimeStamp": "2019-10-27T14:20:27.061Z",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/eventapp-test-20191027065309-deployment/amplify-cfn-templates/auth/eventappb34e47d1-cloudformation-template.yml",
-				"logicalId": "autheventappb34e47d1"
-			},
 			"output": {
 				"AppClientSecret": "4908aj4jnpm3lvpgsohkuv6oncqjopjjbru8cp3s97fn5gao4gv",
 				"UserPoolId": "us-east-1_l9Y7dFUDD",
@@ -40,7 +46,12 @@
 				"IdentityPoolName": "eventappb34e47d1_identitypool_b34e47d1__test",
 				"UserPoolName": "eventappb34e47d1_userpool_b34e47d1"
 			},
-			"lastPushDirHash": "ykIMKrmvc5RHcqGaDomSwJLNwJU="
+			"lastPushTimeStamp": "2020-04-07T04:43:50.130Z",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/eventapp-test-20191027065309-deployment/amplify-cfn-templates/auth/eventappb34e47d1-cloudformation-template.yml",
+				"logicalId": "autheventappb34e47d1"
+			},
+			"lastPushDirHash": "5XRkvH7r/WSsNHPsjK2NSvUhBqY="
 		}
 	},
 	"function": {
@@ -48,20 +59,20 @@
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
 			"build": true,
-			"lastBuildTimeStamp": "2019-10-27T13:55:08.523Z",
-			"lastPackageTimeStamp": "2019-10-27T13:55:08.887Z",
-			"distZipFilename": "eventappb34e47d1PostConfirmation-5172414a7447364a6f63-build.zip",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/eventapp-test-20191027065309-deployment/amplify-cfn-templates/function/eventappb34e47d1PostConfirmation-cloudformation-template.json",
-				"logicalId": "functioneventappb34e47d1PostConfirmation"
-			},
-			"lastPushTimeStamp": "2019-10-27T14:20:27.062Z",
 			"output": {
 				"Region": "us-east-1",
 				"Arn": "arn:aws:lambda:us-east-1:566416766292:function:eventappb34e47d1PostConfirmation-test",
 				"Name": "eventappb34e47d1PostConfirmation-test"
 			},
-			"lastPushDirHash": "wHc8826npQA6aHZDhkI4HVirZIU="
+			"lastPushTimeStamp": "2020-04-07T04:43:50.130Z",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/eventapp-test-20191027065309-deployment/amplify-cfn-templates/function/eventappb34e47d1PostConfirmation-cloudformation-template.json",
+				"logicalId": "functioneventappb34e47d1PostConfirmation"
+			},
+			"lastBuildTimeStamp": "2020-04-07T04:37:19.170Z",
+			"lastPackageTimeStamp": "2020-04-07T04:37:19.339Z",
+			"distZipFilename": "eventappb34e47d1PostConfirmation-4a73452b706665345964-build.zip",
+			"lastPushDirHash": "RUe1bcsX/2SyN5zVpx4MKJ6rqWg="
 		}
 	},
 	"api": {
@@ -81,29 +92,29 @@
 				"GraphQLAPIIdOutput": "t2fpewpfavgf3jiloigkgdfpcu",
 				"GraphQLAPIEndpointOutput": "https://g3uvz3crsze6vfxxwsgdqpgpee.appsync-api.us-east-1.amazonaws.com/graphql"
 			},
+			"lastPushTimeStamp": "2020-04-07T04:43:50.130Z",
 			"providerMetadata": {
 				"s3TemplateURL": "https://s3.amazonaws.com/eventapp-test-20191027065309-deployment/amplify-cfn-templates/api/cloudformation-template.json",
 				"logicalId": "apieventapp"
 			},
-			"lastPushTimeStamp": "2019-10-27T14:20:27.068Z",
-			"lastPushDirHash": "HN+znh8JdbLTt7Lpo2U+WRrze68="
+			"lastPushDirHash": "klMIiIffftvJhs3LkjLtLRHSgkA="
 		}
 	},
 	"analytics": {
 		"eventapp": {
 			"service": "Pinpoint",
 			"providerPlugin": "awscloudformation",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/eventapp-test-20191027065309-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
-				"logicalId": "analyticseventapp"
-			},
-			"lastPushTimeStamp": "2019-10-27T14:20:27.074Z",
 			"output": {
 				"appName": "eventapp-test",
 				"Region": "us-east-1",
 				"Id": "b11dffbd151f457d8932a90851c25e70"
 			},
-			"lastPushDirHash": "yvXvHnzO5zdkW+ONcw+jXcAX5P8="
+			"lastPushTimeStamp": "2020-04-07T04:43:50.130Z",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/eventapp-test-20191027065309-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
+				"logicalId": "analyticseventapp"
+			},
+			"lastPushDirHash": "QIhkySbn9RphC106dGT6dIcZAu0="
 		}
 	}
 }

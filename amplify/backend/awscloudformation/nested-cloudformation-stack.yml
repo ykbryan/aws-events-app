@@ -161,7 +161,7 @@
 						]
 					},
 					"S3DeploymentBucket": "eventapp-test-20191027065309-deployment",
-					"S3DeploymentRootKey": "amplify-appsync-files/4f89e957df5bf65269e6c74d282f94af8425bc98",
+					"S3DeploymentRootKey": "amplify-appsync-files/455f96e59c9f4a5495da720f7be4e40615420f87",
 					"env": "test"
 				}
 			}
@@ -256,7 +256,7 @@
 					}
 				},
 				"Handler": "index.handler",
-				"Runtime": "nodejs8.10",
+				"Runtime": "nodejs10.x",
 				"Timeout": "300",
 				"Role": {
 					"Fn::GetAtt": [
