@@ -62,6 +62,7 @@ export default function ({ navigation }) {
         isClickable={true}
         key={event.id}
         event={event}
+        navigation={navigation}
       />
     ));
   };

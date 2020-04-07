@@ -28,8 +28,6 @@ import { API, graphqlOperation } from 'aws-amplify';
 import Analytics from '@aws-amplify/analytics';
 import { createEvent } from '../graphql/mutations';
 
-import NavigationService from '../utils/NavigationService';
-
 export default function CreateScreen(props) {
   const [datetime, setDatetime] = useState();
   const [mode, setMode] = useState('datetime');

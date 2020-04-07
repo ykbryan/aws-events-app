@@ -7,6 +7,7 @@ import HistoryScreen from './Screens/HistoryScreen';
 import SettingsScreen from './Screens/SettingsScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import HomeScreen from './Screens/HomeScreen';
+import EventScreen from './Screens/EventScreen';
 import CreateScreen from './Screens/CreateScreen';
 import ModalScreen from './Screens/AuthScreen';
 
@@ -97,6 +98,13 @@ const HomeStackNavigator = () => {
         })}
         name='Details'
         component={DetailsScreen}
+      />
+      <HomeStack.Screen
+        options={() => ({
+          headerShown: false,
+        })}
+        name='Event'
+        component={EventScreen}
       />
     </HomeStack.Navigator>
   );

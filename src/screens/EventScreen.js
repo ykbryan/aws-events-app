@@ -12,9 +12,9 @@ import {
   Right,
   List,
   ListItem,
+  Header,
+  Title,
 } from 'native-base';
-
-import NavigationService from '../utils/NavigationService';
 
 import { API, graphqlOperation } from 'aws-amplify';
 import { createFollower, deleteFollower } from '../graphql/mutations';
@@ -22,7 +22,7 @@ import { createFollower, deleteFollower } from '../graphql/mutations';
 import EventBox from '../components/EventBox';
 
 export default function EventScreen(props) {
-  const { event, currentUser } = props.navigation.state.params;
+  const { event, currentUser } = props.route.params;
   let [followers, setFollowers] = useState([]);
   let [follower, setFollower] = useState([]);
   const getFollowersQuery = `query GetEvent(
@@ -176,6 +176,24 @@ export default function EventScreen(props) {
 
   return (
     <Container>
+      <Header>
+        <Left>
+          <Button transparent onPress={() => props.navigation.goBack()}>
+            <Text>Back</Text>
+          </Button>
+        </Left>
+        <Body>
+          <Title>Event Details</Title>
+        </Body>
+        <Right>
+          <Button
+            transparent
+            onPress={() => enterChatRoom(navigation.state.params)}
+          >
+            <Icon name='chatbubbles'></Icon>
+          </Button>
+        </Right>
+      </Header>
       <Content padder>
         <EventBox isClickable={false} event={event} />
         <List>
@@ -192,14 +210,5 @@ export default function EventScreen(props) {
 
 function enterChatRoom(props) {
   const { event, currentUser } = props;
-  NavigationService.navigate('Chat', { event, currentUser });
+  navigation.navigate('Chat', { event, currentUser });
 }
-
-EventScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: 'Event Details',
-  headerRight: (
-    <Button transparent onPress={() => enterChatRoom(navigation.state.params)}>
-      <Icon name='chatbubbles'></Icon>
-    </Button>
-  ),
-});
