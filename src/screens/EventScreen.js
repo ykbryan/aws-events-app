@@ -22,7 +22,8 @@ import { createFollower, deleteFollower } from '../graphql/mutations';
 import EventBox from '../components/EventBox';
 
 export default function EventScreen(props) {
-  const { event, currentUser } = props.route.params;
+  let { event, currentUser } = props.route.params;
+  let { navigation } = props;
   let [followers, setFollowers] = useState([]);
   let [follower, setFollower] = useState([]);
   const getFollowersQuery = `query GetEvent(
@@ -174,11 +175,16 @@ export default function EventScreen(props) {
     }
   }, [followers]);
 
+  const enterChatRoom = (props) => {
+    const { event, currentUser } = props;
+    navigation.navigate('Chat', { event, currentUser });
+  };
+
   return (
     <Container>
       <Header>
         <Left>
-          <Button transparent onPress={() => props.navigation.goBack()}>
+          <Button transparent onPress={() => navigation.goBack()}>
             <Text>Back</Text>
           </Button>
         </Left>
@@ -186,10 +192,7 @@ export default function EventScreen(props) {
           <Title>Event Details</Title>
         </Body>
         <Right>
-          <Button
-            transparent
-            onPress={() => enterChatRoom(navigation.state.params)}
-          >
+          <Button transparent onPress={() => enterChatRoom(props.route.params)}>
             <Icon name='chatbubbles'></Icon>
           </Button>
         </Right>
@@ -206,9 +209,4 @@ export default function EventScreen(props) {
       </Content>
     </Container>
   );
-}
-
-function enterChatRoom(props) {
-  const { event, currentUser } = props;
-  navigation.navigate('Chat', { event, currentUser });
 }

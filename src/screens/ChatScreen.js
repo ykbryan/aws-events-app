@@ -1,12 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
+import {
+  Container,
+  Body,
+  Content,
+  Button,
+  Text,
+  Icon,
+  Card,
+  CardItem,
+  Left,
+  Right,
+  List,
+  ListItem,
+  Header,
+  Title,
+} from 'native-base';
 
 import { API, graphqlOperation } from 'aws-amplify';
 import { createChat } from '../graphql/mutations';
 import { onCreateChat } from '../graphql/subscriptions';
 
 export default function ChatScreen(props) {
-  const { event, currentUser } = props.navigation.state.params;
+  let { event, currentUser } = props.route.params;
+  let { navigation } = props;
   const [messages, setMessages] = useState([]);
   const { attributes } = currentUser;
   const name = attributes.given_name
@@ -39,7 +56,7 @@ export default function ChatScreen(props) {
   }
   `;
 
-  onSend = (newMessages = []) => {
+  const onSend = (newMessages = []) => {
     setMessages(GiftedChat.append(messages, newMessages));
     createEventChat(event.id, currentUser.attributes.sub, newMessages[0].text);
   };
@@ -49,7 +66,7 @@ export default function ChatScreen(props) {
       const input = {
         id: event.id,
         nextToken: null,
-        limit: 20
+        limit: 20,
       };
 
       try {
@@ -58,7 +75,7 @@ export default function ChatScreen(props) {
         );
         const existingMessages = result.data.getEvent.chats.items;
         setMessages(
-          existingMessages.map(item => {
+          existingMessages.map((item) => {
             return formatMessage(item);
           })
         );
@@ -72,7 +89,7 @@ export default function ChatScreen(props) {
 
   useEffect(() => {
     const subscription = API.graphql(graphqlOperation(onCreateChat)).subscribe({
-      next: response => {
+      next: (response) => {
         let newMessageFromResponse = response.value.data.onCreateChat;
         if (
           newMessageFromResponse.event.id === event.id &&
@@ -83,9 +100,9 @@ export default function ChatScreen(props) {
           );
         }
       },
-      error: error => {
+      error: (error) => {
         // console.logq(error);
-      }
+      },
     });
 
     return () => {
@@ -94,21 +111,34 @@ export default function ChatScreen(props) {
   }, [messages]);
 
   return (
-    <GiftedChat
-      messages={messages}
-      onSend={newMessages => onSend(newMessages)}
-      user={{
-        _id: currentUser.attributes.sub,
-        name: name
-      }}
-      inverted={true}
-      placeholder='Type a message...'
-    />
+    <Container>
+      <Header>
+        <Left>
+          <Button transparent onPress={() => navigation.goBack()}>
+            <Text>Back</Text>
+          </Button>
+        </Left>
+        <Title>
+          <Text>Live Chat</Text>
+        </Title>
+        <Right />
+      </Header>
+      <GiftedChat
+        messages={messages}
+        onSend={(newMessages) => onSend(newMessages)}
+        user={{
+          _id: currentUser.attributes.sub,
+          name: name,
+        }}
+        inverted={true}
+        placeholder='Type a message...'
+      />
+    </Container>
   );
 }
 
 ChatScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: 'Live Chat'
+  headerTitle: 'Live Chat',
 });
 
 async function createEventChat(eventId, userId, newMessage) {
@@ -116,8 +146,8 @@ async function createEventChat(eventId, userId, newMessage) {
     input: {
       chatUserId: userId,
       chatEventId: eventId,
-      content: newMessage
-    }
+      content: newMessage,
+    },
   };
   let result = null;
   try {
@@ -137,7 +167,7 @@ function formatMessage(item) {
     user: {
       _id: item.user.id,
       name: item.user.name,
-      avatar: ''
-    }
+      avatar: '',
+    },
   };
 }
