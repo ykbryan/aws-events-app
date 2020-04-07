@@ -66,7 +66,7 @@ const HomeTabNavigator = ({ navigation, route }) => {
       />
       <Tab.Screen
         options={() => ({
-          title: 'ASD',
+          title: 'Account',
         })}
         name='Account'
         component={AccountScreen}
