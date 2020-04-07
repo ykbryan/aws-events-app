@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { RefreshControl } from 'react-native';
 import {
   Container,
   Header,
@@ -8,37 +9,93 @@ import {
   Text,
   Content,
   Card,
-  CardItem
+  CardItem,
+  Left,
+  Right,
+  Icon,
 } from 'native-base';
 
-export default function({ navigation }) {
+import { API, graphqlOperation } from 'aws-amplify';
+import Analytics from '@aws-amplify/analytics';
+import { listEvents } from '../graphql/queries';
+
+import EventBox from '../components/EventBox';
+import { getCognitoUser, updateDatabaseUser } from '../utils/users';
+
+export default function ({ navigation }) {
+  const [events, setEvents] = useState([]);
+  const [refreshing, setRefreshing] = useState(true);
+
+  let user = getCognitoUser();
+  updateDatabaseUser(user.username, user.attributes);
+
+  useEffect(() => {
+    getAllEvents();
+  }, []);
+
+  async function getAllEvents() {
+    const input = {
+      filter: {
+        startAt: {
+          ge: parseInt(new Date().getTime() / 1000),
+        },
+      },
+    };
+
+    const allEvents = await API.graphql(graphqlOperation(listEvents, input));
+    console.log(allEvents.data.listEvents.items);
+    setRefreshing(false);
+    setEvents(allEvents.data.listEvents.items);
+  }
+
+  const renderEvents = () => {
+    if (events.length > 0)
+      Analytics.record({
+        name: 'loaded',
+        attributes: {
+          screen: 'Home',
+        },
+      });
+    return events.map((event) => (
+      <EventBox
+        currentUser={user}
+        isClickable={true}
+        key={event.id}
+        event={event}
+      />
+    ));
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    getAllEvents();
+  };
+
   return (
     <Container>
       <Header>
+        <Left />
         <Body>
-          <Title>Home Header</Title>
+          <Title>Home</Title>
         </Body>
+        <Right>
+          <Button transparent onPress={() => navigation.navigate('Create')}>
+            <Icon name='add' style={{ padding: 10 }}></Icon>
+          </Button>
+        </Right>
       </Header>
-      <Content padder style={{ alignContent: 'center' }}>
-        <Card>
-          <CardItem>
-            <Body>
-              <Text>//Your text here</Text>
-              <Text>//Your text here</Text>
-              <Text>//Your text here</Text>
-              <Text>//Your text here</Text>
-              <Text>//Your text here</Text>
-              <Button
-                onPress={() => {
-                  navigation.navigate('Modal');
-                }}
-                bordered
-              >
-                <Text>Open Modal</Text>
-              </Button>
-            </Body>
-          </CardItem>
-        </Card>
+      <Content
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            title='Loading'
+          />
+        }
+        padder
+        style={{ alignContent: 'center' }}
+      >
+        {renderEvents(events)}
       </Content>
     </Container>
   );

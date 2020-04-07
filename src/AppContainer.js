@@ -7,6 +7,7 @@ import HistoryScreen from './Screens/HistoryScreen';
 import SettingsScreen from './Screens/SettingsScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import HomeScreen from './Screens/HomeScreen';
+import CreateScreen from './Screens/CreateScreen';
 import ModalScreen from './Screens/AuthScreen';
 
 const Stack = createStackNavigator();
@@ -50,27 +51,27 @@ const HomeTabNavigator = ({ navigation, route }) => {
           else if (route.name == 'History') iconName = 'ios-globe';
           else if (route.name == 'Settings') iconName = 'ios-settings';
           return <Ionicons name={iconName} size={size} color={color} />;
-        }
+        },
       })}
     >
       <Tab.Screen
-        options={route => ({
+        options={(route) => ({
           title: 'Home',
-          headerShown: shouldHeaderBeShown(route)
+          headerShown: shouldHeaderBeShown(route),
         })}
         name='Home'
         component={HomeScreen}
       />
       <Tab.Screen
         options={() => ({
-          title: 'History'
+          title: 'History',
         })}
         name='History'
         component={HistoryScreen}
       />
       <Tab.Screen
         options={() => ({
-          title: 'Settings'
+          title: 'Settings',
         })}
         name='Settings'
         component={SettingsScreen}
@@ -85,14 +86,14 @@ const HomeStackNavigator = () => {
       <HomeStack.Screen
         options={() => ({
           title: 'Settings',
-          headerShown: false
+          headerShown: false,
         })}
         name='HomeTabNavigator'
         component={HomeTabNavigator}
       />
       <HomeStack.Screen
         options={() => ({
-          headerShown: false
+          headerShown: false,
         })}
         name='Details'
         component={DetailsScreen}
@@ -110,14 +111,21 @@ export default function AppContainer() {
     >
       <Stack.Screen
         options={({ route }) => ({
-          headerShown: shouldHeaderBeShown(route)
+          headerShown: shouldHeaderBeShown(route),
         })}
         name='HomeStackNavigator'
         component={HomeStackNavigator}
       />
       <Stack.Screen
         options={() => ({
-          headerShown: false
+          headerShown: false,
+        })}
+        name='Create'
+        component={CreateScreen}
+      />
+      <Stack.Screen
+        options={() => ({
+          headerShown: false,
         })}
         name='Modal'
         component={ModalScreen}

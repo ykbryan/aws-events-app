@@ -11,7 +11,7 @@ import {
   Left,
   Right,
   List,
-  ListItem
+  ListItem,
 } from 'native-base';
 
 import NavigationService from '../utils/NavigationService';
@@ -53,7 +53,7 @@ export default function EventScreen(props) {
 
   renderFollowers = () => {
     if (followers.length > 0)
-      return followers.map(follower => (
+      return followers.map((follower) => (
         <ListItem key={follower.id}>
           <Text>
             {follower.user.name} (@{follower.user.username})
@@ -103,8 +103,8 @@ export default function EventScreen(props) {
       const input = {
         input: {
           followerUserId: currentUser.attributes.sub,
-          followerEventId: event.id
-        }
+          followerEventId: event.id,
+        },
       };
 
       let result = null;
@@ -122,11 +122,11 @@ export default function EventScreen(props) {
     createNewFollower();
   };
 
-  getAllFollowers = eventId => {
+  getAllFollowers = (eventId) => {
     const input = {
       id: eventId,
       nextToken: null,
-      limit: 10
+      limit: 10,
     };
     useEffect(() => {
       const fetchFollowers = async () => {
@@ -137,18 +137,18 @@ export default function EventScreen(props) {
     }, [setFollowers]);
   };
 
-  leaveEvent = follower => {
+  leaveEvent = (follower) => {
     deleteExistingFollower = async () => {
       const input = {
         input: {
-          id: follower.id
-        }
+          id: follower.id,
+        },
       };
 
       let result = null;
       try {
         result = await API.graphql(graphqlOperation(deleteFollower, input));
-        var newFollowers = followers.filter(function(item, index, arr) {
+        var newFollowers = followers.filter(function (item, index, arr) {
           return item.id !== follower.id;
         });
         setFollowers(newFollowers);
@@ -168,7 +168,7 @@ export default function EventScreen(props) {
   useEffect(() => {
     if (followers.length > 0) {
       const findFollower = followers.find(
-        element => element.user.id === currentUser.attributes.sub
+        (element) => element.user.id === currentUser.attributes.sub
       );
       if (findFollower) setFollower(findFollower);
     }
@@ -201,5 +201,5 @@ EventScreen.navigationOptions = ({ navigation }) => ({
     <Button transparent onPress={() => enterChatRoom(navigation.state.params)}>
       <Icon name='chatbubbles'></Icon>
     </Button>
-  )
+  ),
 });
