@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 import HistoryScreen from './Screens/HistoryScreen';
-import SettingsScreen from './Screens/SettingsScreen';
+import AccountScreen from './Screens/AccountScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import HomeScreen from './Screens/HomeScreen';
 import EventScreen from './Screens/EventScreen';
@@ -51,7 +51,7 @@ const HomeTabNavigator = ({ navigation, route }) => {
           let iconName;
           if (route.name == 'Home') iconName = 'ios-home';
           else if (route.name == 'History') iconName = 'ios-globe';
-          else if (route.name == 'Settings') iconName = 'ios-settings';
+          else if (route.name == 'Account') iconName = 'ios-person';
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
@@ -66,17 +66,10 @@ const HomeTabNavigator = ({ navigation, route }) => {
       />
       <Tab.Screen
         options={() => ({
-          title: 'History',
+          title: 'ASD',
         })}
-        name='History'
-        component={HistoryScreen}
-      />
-      <Tab.Screen
-        options={() => ({
-          title: 'Settings',
-        })}
-        name='Settings'
-        component={SettingsScreen}
+        name='Account'
+        component={AccountScreen}
       />
     </Tab.Navigator>
   );
