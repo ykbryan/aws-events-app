@@ -6,10 +6,7 @@ import {
   Body,
   Button,
   Title,
-  Text,
   Content,
-  Card,
-  CardItem,
   Left,
   Right,
   Icon,
@@ -22,7 +19,7 @@ import { listEvents } from '../graphql/queries';
 import EventBox from '../components/EventBox';
 import { getCognitoUser, updateDatabaseUser } from '../utils/users';
 
-export default function ({ navigation }) {
+export default function ({ navigation, route }) {
   const [events, setEvents] = useState([]);
   const [refreshing, setRefreshing] = useState(true);
 
@@ -30,22 +27,32 @@ export default function ({ navigation }) {
   updateDatabaseUser(user.username, user.attributes);
 
   useEffect(() => {
+    if (route.params?.refreshList) {
+      setRefreshing(true);
+    }
     getAllEvents();
-  }, []);
+
+    // console.log('useEffect', route.params?.refreshList);
+  }, [route.params]);
 
   async function getAllEvents() {
-    const input = {
-      filter: {
-        startAt: {
-          ge: parseInt(new Date().getTime() / 1000),
-        },
+    const filters = {
+      startAt: {
+        ge: parseInt(new Date().getTime() / 1000),
       },
     };
 
-    const allEvents = await API.graphql(graphqlOperation(listEvents, input));
-    // console.log(allEvents.data.listEvents.items);
+    const limit = 10;
+    const allEvents = await API.graphql(
+      graphqlOperation(listEvents, filters, limit)
+    );
+    // console.log(allEvents.data.listEvents.items.length);
     setRefreshing(false);
-    setEvents(allEvents.data.listEvents.items);
+    setEvents(
+      allEvents.data.listEvents.items.sort(function (a, b) {
+        return a.startAt === b.startAt ? 0 : a.startAt < b.startAt ? -1 : 1;
+      })
+    );
   }
 
   const renderEvents = () => {
@@ -81,7 +88,7 @@ export default function ({ navigation }) {
         </Body>
         <Right>
           <Button transparent onPress={() => navigation.navigate('Create')}>
-            <Icon name='add' style={{ padding: 10 }}></Icon>
+            <Icon name='add'></Icon>
           </Button>
         </Right>
       </Header>

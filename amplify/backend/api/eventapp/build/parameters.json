@@ -1,5 +1,4 @@
 {
-    "CreateAPIKey": 0,
     "AppSyncApiName": "eventapp",
     "DynamoDBBillingMode": "PAY_PER_REQUEST",
     "DynamoDBEnableServerSideEncryption": "false",
@@ -9,6 +8,6 @@
             "Outputs.UserPoolId"
         ]
     },
-    "S3DeploymentBucket": "eventapp-test-20191027065309-deployment",
+    "S3DeploymentBucket": "fake-bucket",
     "S3DeploymentRootKey": "amplify-appsync-files/455f96e59c9f4a5495da720f7be4e40615420f87"
 }

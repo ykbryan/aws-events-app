@@ -1,6 +1,6 @@
 projects:
   eventapp:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/eventapp/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:
