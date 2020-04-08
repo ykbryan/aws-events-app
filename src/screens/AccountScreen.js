@@ -137,7 +137,7 @@ export default function AccountScreen() {
                 </Item>
               </Body>
             </ListItem>
-            <ListItem>
+            <ListItem last>
               <Body>
                 <Button transparent onPress={() => Auth.signOut()}>
                   <Text>Sign Out</Text>

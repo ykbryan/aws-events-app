@@ -2,17 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 import {
   Container,
-  Body,
-  Content,
   Button,
   Text,
   Icon,
-  Card,
-  CardItem,
   Left,
   Right,
-  List,
-  ListItem,
   Header,
   Title,
 } from 'native-base';
@@ -115,6 +109,7 @@ export default function ChatScreen(props) {
       <Header>
         <Left>
           <Button transparent onPress={() => navigation.goBack()}>
+            <Icon name='ios-arrow-back' style={{ padding: 10 }}></Icon>
             <Text>Back</Text>
           </Button>
         </Left>

@@ -26,6 +26,7 @@ export default function EventScreen(props) {
   let { navigation } = props;
   let [followers, setFollowers] = useState([]);
   let [follower, setFollower] = useState([]);
+  let [pending, setPending] = useState(false);
   const getFollowersQuery = `query GetEvent(
     $id: ID!
     $nextToken: String
@@ -100,27 +101,30 @@ export default function EventScreen(props) {
   };
 
   joinEvent = (event, currentUser) => {
-    createNewFollower = async () => {
-      const input = {
-        input: {
-          followerUserId: currentUser.attributes.sub,
-          followerEventId: event.id,
-        },
+    if (!pending) {
+      createNewFollower = async () => {
+        const input = {
+          input: {
+            followerUserId: currentUser.attributes.sub,
+            followerEventId: event.id,
+          },
+        };
+
+        let result = null;
+        try {
+          result = await API.graphql(graphqlOperation(createFollower, input));
+          const newFollower = result.data.createFollower;
+          followers.push(newFollower);
+          setFollower(newFollower);
+          setFollowers(followers);
+        } catch (e) {
+          console.log(e);
+        }
+        setPending(false);
       };
-
-      let result = null;
-      try {
-        result = await API.graphql(graphqlOperation(createFollower, input));
-        const newFollower = result.data.createFollower;
-        followers.push(newFollower);
-        setFollower(newFollower);
-        setFollowers(followers);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    createNewFollower();
+      setPending(true);
+      createNewFollower();
+    }
   };
 
   getAllFollowers = (eventId) => {
@@ -139,29 +143,33 @@ export default function EventScreen(props) {
   };
 
   leaveEvent = (follower) => {
-    deleteExistingFollower = async () => {
-      const input = {
-        input: {
-          id: follower.id,
-        },
+    if (!pending) {
+      deleteExistingFollower = async () => {
+        const input = {
+          input: {
+            id: follower.id,
+          },
+        };
+
+        let result = null;
+        try {
+          result = await API.graphql(graphqlOperation(deleteFollower, input));
+          var newFollowers = followers.filter(function (item, index, arr) {
+            return item.id !== follower.id;
+          });
+          setFollowers(newFollowers);
+          setFollower([]);
+        } catch (e) {
+          console.log(e);
+        }
+
+        setPending(false);
+        return result.data;
       };
 
-      let result = null;
-      try {
-        result = await API.graphql(graphqlOperation(deleteFollower, input));
-        var newFollowers = followers.filter(function (item, index, arr) {
-          return item.id !== follower.id;
-        });
-        setFollowers(newFollowers);
-        setFollower([]);
-      } catch (e) {
-        console.log(e);
-      }
-
-      return result.data;
-    };
-
-    deleteExistingFollower();
+      setPending(true);
+      deleteExistingFollower();
+    }
   };
 
   getAllFollowers(event.id);
@@ -185,6 +193,7 @@ export default function EventScreen(props) {
       <Header>
         <Left>
           <Button transparent onPress={() => navigation.goBack()}>
+            <Icon name='ios-arrow-back' style={{ padding: 10 }}></Icon>
             <Text>Back</Text>
           </Button>
         </Left>

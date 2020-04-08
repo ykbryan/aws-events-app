@@ -43,7 +43,7 @@ export default function ({ navigation }) {
     };
 
     const allEvents = await API.graphql(graphqlOperation(listEvents, input));
-    console.log(allEvents.data.listEvents.items);
+    // console.log(allEvents.data.listEvents.items);
     setRefreshing(false);
     setEvents(allEvents.data.listEvents.items);
   }
