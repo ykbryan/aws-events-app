@@ -9,6 +9,7 @@ import {
   Right,
   Header,
   Title,
+  Body,
 } from 'native-base';
 
 import { API, graphqlOperation } from 'aws-amplify';
@@ -109,13 +110,15 @@ export default function ChatScreen(props) {
       <Header>
         <Left>
           <Button transparent onPress={() => navigation.goBack()}>
-            <Icon name='ios-arrow-back' style={{ padding: 10 }}></Icon>
+            <Icon name='ios-arrow-back'></Icon>
             <Text>Back</Text>
           </Button>
         </Left>
-        <Title>
-          <Text>Live Chat</Text>
-        </Title>
+        <Body>
+          <Title>
+            <Text>Live Chat</Text>
+          </Title>
+        </Body>
         <Right />
       </Header>
       <GiftedChat

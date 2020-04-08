@@ -27,6 +27,8 @@ export default function EventScreen(props) {
   let [followers, setFollowers] = useState([]);
   let [follower, setFollower] = useState([]);
   let [pending, setPending] = useState(false);
+
+  // TODO: workshop, insert your graphql query here to get all followers
   const getFollowersQuery = `query GetEvent(
     $id: ID!
     $nextToken: String
@@ -193,7 +195,7 @@ export default function EventScreen(props) {
       <Header>
         <Left>
           <Button transparent onPress={() => navigation.goBack()}>
-            <Icon name='ios-arrow-back' style={{ padding: 10 }}></Icon>
+            <Icon name='ios-arrow-back'></Icon>
             <Text>Back</Text>
           </Button>
         </Left>

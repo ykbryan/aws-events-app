@@ -21,24 +21,24 @@ const getActiveRouteName = (state) => {
   return route.name;
 };
 
-const loadFonts = async () => {
-  // for native-base
-  await Font.loadAsync({
-    Roboto: require('native-base/Fonts/Roboto.ttf'),
-    Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-    ...Ionicons.font,
-  });
-};
-
 function App() {
   const [appState, setAppState] = useState(AppState.currentState);
   const [isLoading, setIsLoading] = useState(true);
   const navigationRef = useRef();
   const routeNameRef = useRef();
 
+  const loadFonts = async () => {
+    // for native-base
+    await Font.loadAsync({
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      ...Ionicons.font,
+    });
+    setIsLoading(!isLoading);
+  };
+
   useEffect(() => {
     loadFonts();
-    setIsLoading(!isLoading);
 
     // app state
     AppState.addEventListener('change', _handleAppStateChange);
