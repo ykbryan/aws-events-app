@@ -1,9 +1,6 @@
 import React from 'react';
 import { Body, Text, Card, CardItem } from 'native-base';
-
 import moment from 'moment';
-
-import NavigationService from '../utils/NavigationService';
 
 export default function EventBox(props) {
   let { navigation, event, currentUser, isClickable } = props;

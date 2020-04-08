@@ -6,9 +6,11 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 
-import Amplify from 'aws-amplify';
+import Amplify from '@aws-amplify/core';
 import awsconfig from './aws-exports';
 import { withAuthenticator } from 'aws-amplify-react-native';
+import Analytics from '@aws-amplify/analytics';
+
 Amplify.configure(awsconfig);
 
 const getActiveRouteName = (state) => {
@@ -51,20 +53,28 @@ function App() {
   }, []);
 
   const _handleAppStateChange = (nextAppState) => {
-    if (appState !== nextAppState) {
-      if (appState.match(/inactive|background/) && nextAppState === 'active') {
-        console.log('App has come to the foreground!');
-        //TODO: add analytics here
-      } else if (
-        appState.match(/active|background/) &&
-        nextAppState.match(/inactive|background/)
-      ) {
-        console.log('App went to the background!');
-        //TODO: add analytics here
-      }
-      console.log('from:', appState, 'to:', nextAppState);
-      setAppState(nextAppState);
+    if (appState.match(/active|background/) && nextAppState === 'active') {
+      console.log('App has come to the foreground!', routeNameRef.current);
+      Analytics.record({
+        name: 'Navigate',
+        attributes: {
+          background: false,
+        },
+      });
+    } else if (
+      appState.match(/active|background/) &&
+      nextAppState === 'background'
+    ) {
+      console.log('App went to the background!');
+      Analytics.record({
+        name: 'Navigate',
+        attributes: {
+          background: true,
+        },
+      });
     }
+    // console.log('from:', appState, 'to:', nextAppState);
+    setAppState(nextAppState);
   };
 
   return (
@@ -75,9 +85,17 @@ function App() {
         if (state) {
           const currentRouteName = getActiveRouteName(state);
 
-          if (!previousRouteName !== currentRouteName) {
-            //TODO: Add analytics here
+          if (
+            !previousRouteName !== currentRouteName &&
+            appState === 'active'
+          ) {
             console.log('tracking current screen:', currentRouteName);
+            Analytics.record({
+              name: 'Navigate',
+              attributes: {
+                screen: currentRouteName,
+              },
+            });
           }
           routeNameRef.current = currentRouteName;
         }
