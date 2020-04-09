@@ -9,7 +9,7 @@ function getCognitoUser(bypass = false) {
 
   const fetchUser = async () => {
     const cognitoUser = await Auth.currentAuthenticatedUser({
-      bypassCache: bypass
+      bypassCache: bypass,
     });
     // console.log(cognitoUser);
     setUser(cognitoUser);
@@ -22,36 +22,59 @@ function getCognitoUser(bypass = false) {
   return user;
 }
 
-async function updateDatabaseUser(username, attributes) {
+async function updateDatabaseUser(username, attributes, firsttime = true) {
   if (!username || !attributes) return null;
 
+  const cognitoUser = await Auth.currentAuthenticatedUser();
   const id = attributes.sub;
   const email = attributes.email;
   const phone_number = attributes.phone_number;
   const name = `${attributes.given_name} ${attributes.family_name}`;
   let result = null;
+
+  // if (
+  //   email === cognitoUser.attributes.email &&
+  //   phone_number === cognitoUser.attributes.phone_number &&
+  //   name === cognitoUserName
+  // ) {
+  //   console.log('skipped');
+  //   return null;
+  // }
+  console.log(updateDatabaseUser, firsttime);
+  if (!firsttime) return null;
+
   const input = {
     input: {
       id,
       email,
       username,
       name,
-      phone_number
-    }
+      phone_number,
+    },
   };
+
+  let isNewUser = false;
 
   try {
     result = await API.graphql(graphqlOperation(createUser, input));
+    isNewUser = true;
+    console.log('new user!');
   } catch (e) {
     result = await API.graphql(graphqlOperation(updateUser, input));
+    console.log('existing user!');
   }
 
-  if (email) {
+  if (isNewUser || email !== cognitoUser.attributes.email) {
+    // console.log('updateEndpoint', email, attributes);
     updateEndpoint(attributes, 'email');
   }
-  if (phone_number) {
+  if (isNewUser || phone_number !== cognitoUser.attributes.phone_number) {
+    // console.log('updateEndpoint', phone_number, attributes);
     updateEndpoint(attributes, 'phone_number');
   }
+
+  // if (isNewUser)
+  // add analytic here?
 
   return result.data;
 }
@@ -69,7 +92,7 @@ async function updateEndpoint(
         ChannelType: 'EMAIL',
         Address: attributes.email,
         UserId: attributes.sub,
-        OptOut: 'NONE'
+        OptOut: 'NONE',
       });
       break;
     case 'phone_number':
@@ -77,7 +100,7 @@ async function updateEndpoint(
         ChannelType: 'SMS',
         Address: attributes.phone_number,
         UserId: attributes.sub,
-        OptOut: 'NONE'
+        OptOut: 'NONE',
       });
       break;
     case 'push':
@@ -90,13 +113,14 @@ async function updateEndpoint(
         ChannelType: channelType,
         Address: deviceToken,
         UserId: attributes.sub,
-        OptOut: 'NONE'
+        OptOut: 'NONE',
       });
       break;
     default:
       console.log('wrong channel ', type);
       break;
   }
+  console.log('channel updated', type);
   return result;
 }
 

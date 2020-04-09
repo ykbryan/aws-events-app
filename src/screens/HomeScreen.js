@@ -13,29 +13,38 @@ import {
 } from 'native-base';
 
 import { API, graphqlOperation } from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 import Analytics from '@aws-amplify/analytics';
 import { listEvents } from '../graphql/queries';
 
 import EventBox from '../components/EventBox';
-import { getCognitoUser, updateDatabaseUser } from '../utils/users';
+import { updateDatabaseUser } from '../utils/users';
 
 export default function ({ navigation, route }) {
   const [events, setEvents] = useState([]);
   const [refreshing, setRefreshing] = useState(true);
-
-  let user = getCognitoUser();
-  updateDatabaseUser(user.username, user.attributes);
+  const [user, setUser] = useState([]);
+  const [loaded, setLoaded] = useState(true);
 
   useEffect(() => {
     if (route.params?.refreshList) {
       setRefreshing(true);
     }
+    authUser();
     getAllEvents();
-    Analytics.record({
-      name: 'loaded',
-    });
-    // console.log('useEffect', route.params?.refreshList);
   }, [route.params]);
+
+  async function authUser() {
+    const cognitoUser = await Auth.currentAuthenticatedUser();
+    if (cognitoUser) {
+      setUser(cognitoUser);
+      updateDatabaseUser(cognitoUser.username, cognitoUser.attributes, loaded);
+      setLoaded(false);
+      Analytics.record({
+        name: 'loaded',
+      });
+    }
+  }
 
   async function getAllEvents() {
     const filters = {

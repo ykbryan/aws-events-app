@@ -28,7 +28,6 @@ import { useFormInput } from '../utils/forms';
 export default function AccountScreen() {
   let user = getCognitoUser(true);
   const { attributes } = user;
-
   let firstName = useFormInput(attributes ? attributes.given_name : '');
   let lastName = useFormInput(attributes ? attributes.family_name : '');
   let phoneNumber = useFormInput(attributes ? attributes.phone_number : '');
