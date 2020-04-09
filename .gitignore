@@ -1,6 +1,8 @@
 yarn-error.log
 yarn.lock
 node_modules/**/*
+.DS_Store
+*/.DS_Store
 
 #amplify
 amplify/\#current-cloud-backend
