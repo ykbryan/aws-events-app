@@ -1,4 +1,4 @@
-import React from 'react';
+import React from './node_modules/react';
 import {
   Container,
   Thumbnail,
@@ -19,7 +19,7 @@ import {
   Header,
   Title,
 } from 'native-base';
-import { Auth } from 'aws-amplify';
+import { Auth } from './node_modules/aws-amplify';
 
 import { getCognitoUser, updateDatabaseUser } from '../utils/users';
 import { useFormInput } from '../utils/forms';
@@ -38,11 +38,13 @@ export default function AccountScreen() {
       family_name: lastName.value,
       phone_number: phoneNumber.value,
     };
-    let result = await Auth.updateUserAttributes(user, updatedAttributes).catch(
-      (err) => {
+    let result = await Auth.updateUserAttributes(user, updatedAttributes)
+      .catch((err) => {
         console.log(err);
-      }
-    );
+      })
+      .then((user) => {
+        console.log(user);
+      });
     Toast.show({
       text: `${result}!`,
       buttonText: 'Okay',

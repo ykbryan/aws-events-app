@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from './node_modules/react';
 import {
   Container,
   Item,
@@ -17,15 +17,15 @@ import {
   Form,
 } from 'native-base';
 
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import DateTimePickerModal from './node_modules/react-native-modal-datetime-picker';
 
-import moment from 'moment';
+import moment from './node_modules/moment';
 
 import { getCognitoUser } from '../utils/users';
 import { useFormInput } from '../utils/forms';
 
-import { API, graphqlOperation } from 'aws-amplify';
-import Analytics from '@aws-amplify/analytics';
+import { API, graphqlOperation } from './node_modules/aws-amplify';
+import Analytics from './node_modules/@aws-amplify/analytics';
 import { createEvent } from '../graphql/mutations';
 
 export default function CreateScreen({ navigation }) {
