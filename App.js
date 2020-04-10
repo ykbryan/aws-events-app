@@ -12,6 +12,9 @@ import { withAuthenticator } from 'aws-amplify-react-native';
 import Analytics from '@aws-amplify/analytics';
 
 Amplify.configure(awsconfig);
+Analytics.autoTrack('session', {
+  enable: true,
+});
 
 const getActiveRouteName = (state) => {
   const route = state.routes[state.index];

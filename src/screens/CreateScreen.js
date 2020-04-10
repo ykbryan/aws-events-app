@@ -7,8 +7,6 @@ import {
   Content,
   Button,
   Text,
-  List,
-  ListItem,
   Label,
   Header,
   Left,
@@ -53,7 +51,6 @@ export default function CreateScreen({ navigation }) {
   let description = useFormInput();
 
   const createNewEvent = async () => {
-    console.log(title.value);
     if (!title.value || !description.value) {
       alert('Pls fill up the information');
       return;
@@ -77,13 +74,19 @@ export default function CreateScreen({ navigation }) {
 
     navigation.navigate('Home', { refreshList: true });
 
-    Analytics.record({
-      name: 'createdEvent',
-      attributes: {
-        username: user.username,
-        userId: user.attributes.sub,
-        eventId: result.data.createEvent.id,
+    await Analytics.updateEndpoint({
+      userAttributes: {
+        latestEvent: [title.value],
       },
+    }).then(() => {
+      console.log('createdEvent');
+      Analytics.record({
+        name: 'createdEvent',
+        attributes: {
+          username: user.username,
+          userId: user.attributes.sub,
+        },
+      });
     });
 
     return result.data;
