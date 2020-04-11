@@ -16,17 +16,25 @@ import {
   Title,
 } from 'native-base';
 
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { createFollower, deleteFollower } from '../graphql/mutations';
 
 import EventBox from '../components/EventBox';
 
 export default function EventScreen(props) {
-  let { event, currentUser } = props.route.params;
+  let { event } = props.route.params;
   let { navigation } = props;
+  let [currentUser, setCurrentUser] = useState([]);
   let [followers, setFollowers] = useState([]);
   let [follower, setFollower] = useState([]);
   let [pending, setPending] = useState(false);
+
+  async function authUser() {
+    const cognitoUser = await Auth.currentAuthenticatedUser();
+    if (cognitoUser) {
+      setCurrentUser(cognitoUser);
+    }
+  }
 
   // TODO: workshop, insert your graphql query here to get all followers
   const getFollowersQuery = `query GetEvent(
@@ -179,6 +187,7 @@ export default function EventScreen(props) {
   getAllFollowers(event.id);
 
   useEffect(() => {
+    authUser();
     if (followers.length > 0) {
       const findFollower = followers.find(
         (element) => element.user.id === currentUser.attributes.sub

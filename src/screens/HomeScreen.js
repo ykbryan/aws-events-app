@@ -5,17 +5,21 @@ import {
   Header,
   Body,
   Button,
+  Text,
   Title,
   Content,
   Left,
   Right,
   Icon,
+  Spinner,
 } from 'native-base';
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 import { API, graphqlOperation } from 'aws-amplify';
 import Auth from '@aws-amplify/auth';
 import Analytics from '@aws-amplify/analytics';
 import { listEvents } from '../graphql/queries';
+import { deleteEvent } from '../graphql/mutations';
 
 import EventBox from '../components/EventBox';
 import { updateDatabaseUser } from '../utils/users';
@@ -57,7 +61,6 @@ export default function ({ navigation, route }) {
     const allEvents = await API.graphql(
       graphqlOperation(listEvents, filters, limit)
     );
-    // console.log(allEvents.data.listEvents.items.length);
     setRefreshing(false);
     setEvents(
       allEvents.data.listEvents.items.sort(function (a, b) {
@@ -66,16 +69,85 @@ export default function ({ navigation, route }) {
     );
   }
 
+  async function deleteEventById(eventId) {
+    setRefreshing(true);
+    Analytics.record({
+      name: 'deleteEvent',
+      attributes: {
+        eventId: eventId,
+        userId: user.attributes.sub,
+      },
+    });
+    const details = {
+      id: eventId,
+    };
+    await API.graphql(graphqlOperation(deleteEvent, { input: details }));
+    getAllEvents();
+  }
+
   const renderEvents = () => {
-    return events.map((event) => (
-      <EventBox
-        currentUser={user}
-        isClickable={true}
-        key={event.id}
-        event={event}
-        navigation={navigation}
+    return (
+      <SwipeListView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            title='Loading'
+          />
+        }
+        data={events}
+        renderItem={(data, rowMap) => (
+          <EventBox
+            currentUser={user}
+            isClickable={true}
+            key={data.item.id}
+            event={data.item}
+          />
+        )}
+        renderHiddenItem={(data, dataMap) => {
+          const disabledButton = () => (
+            <Button
+              disabled
+              bordered
+              style={{ width: 100, justifyContent: 'center' }}
+            >
+              <Text>Delete</Text>
+            </Button>
+          );
+          const enabledButton = () => (
+            <Content>
+              <Button
+                danger
+                style={{ width: 100, justifyContent: 'center' }}
+                onPress={() => deleteEventById(data.item.id)}
+              >
+                <Text>Delete</Text>
+              </Button>
+              {refreshing && <Spinner color='red' />}
+            </Content>
+          );
+          const renderButton = () => {
+            if (data.item.user.username === user.username)
+              return enabledButton();
+            return disabledButton();
+          };
+          return (
+            <Content
+              style={{
+                alignSelf: 'flex-end',
+                padding: 10,
+                alignContent: 'center',
+              }}
+            >
+              {renderButton()}
+            </Content>
+          );
+        }}
+        rightOpenValue={-125}
+        style={{ padding: 10 }}
+        disableRightSwipe={true}
       />
-    ));
+    );
   };
 
   const onRefresh = () => {
@@ -96,19 +168,7 @@ export default function ({ navigation, route }) {
           </Button>
         </Right>
       </Header>
-      <Content
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            title='Loading'
-          />
-        }
-        padder
-        style={{ alignContent: 'center' }}
-      >
-        {renderEvents(events)}
-      </Content>
+      {renderEvents(events)}
     </Container>
   );
 }
